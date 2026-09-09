@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -67,14 +68,28 @@
   .hero{
     position:relative; min-height:100vh; display:flex; align-items:center;
     padding-top:80px;
-    background-image:
-      linear-gradient(180deg, rgba(10,10,11,0.2), rgba(10,10,11,0.95) 85%),
-      repeating-linear-gradient(115deg, rgba(255,255,255,0.025) 0 1px, transparent 1px 90px),
-      repeating-linear-gradient(25deg, rgba(255,255,255,0.02) 0 1px, transparent 1px 120px);
     overflow:hidden;
   }
-  #hero-canvas{position:absolute; inset:0; z-index:0; opacity:0.5;}
-  .hero-inner{position:relative; z-index:2; width:100%;}
+  .hero-bg{
+    position:absolute; inset:0; z-index:0;
+    background-image:url('hero-bg.jpg');
+    background-size:cover; background-position:center 35%;
+    animation:kenburns 22s ease-in-out infinite alternate;
+    filter:saturate(1.05);
+  }
+  @keyframes kenburns{
+    0%{transform:scale(1) translate(0,0);}
+    100%{transform:scale(1.12) translate(-1%,-1%);}
+  }
+  .hero-overlay{
+    position:absolute; inset:0; z-index:1;
+    background:
+      linear-gradient(180deg, rgba(10,10,11,0.35) 0%, rgba(10,10,11,0.55) 45%, rgba(10,10,11,0.97) 92%),
+      linear-gradient(90deg, rgba(10,10,11,0.92) 0%, rgba(10,10,11,0.5) 42%, rgba(10,10,11,0.2) 70%),
+      repeating-linear-gradient(115deg, rgba(255,255,255,0.02) 0 1px, transparent 1px 90px);
+  }
+  #hero-canvas{position:absolute; inset:0; z-index:2; opacity:0.6;}
+  .hero-inner{position:relative; z-index:3; width:100%;}
   .eyebrow{
     font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.18em;
     color:var(--grey); text-transform:uppercase; margin-bottom:22px;
@@ -116,7 +131,7 @@
   .scroll-cue{
     position:absolute; bottom:34px; left:32px; display:flex; align-items:center; gap:12px;
     font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--grey); letter-spacing:0.1em;
-    z-index:2;
+    z-index:3;
   }
   .scroll-cue .bar{width:1px; height:34px; background:var(--line); position:relative; overflow:hidden;}
   .scroll-cue .bar::after{
@@ -142,6 +157,27 @@
     border-left:3px solid var(--blue); font-size:14px; color:#c9c9cc; line-height:1.7;
   }
   .note-card b{color:var(--off-white);}
+  .portrait-frame{
+    position:relative; border:1px solid var(--line); overflow:hidden; margin-bottom:24px;
+    aspect-ratio:4/5;
+  }
+  .portrait-frame img{
+    width:100%; height:100%; object-fit:cover; object-position:top center;
+    filter:grayscale(1) contrast(1.08) brightness(0.95);
+    transition:filter .6s ease, transform .6s ease;
+  }
+  .portrait-frame:hover img{filter:grayscale(0.15) contrast(1.05) brightness(1); transform:scale(1.03);}
+  .portrait-frame::before{
+    content:''; position:absolute; top:0; left:0; right:0; height:3px; z-index:2;
+    background:linear-gradient(90deg,var(--blue),var(--violet),var(--red));
+  }
+  .portrait-tag{
+    position:absolute; bottom:0; left:0; right:0; z-index:2; padding:14px 16px;
+    background:linear-gradient(0deg, rgba(10,10,11,0.92), transparent);
+    font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em;
+    color:var(--off-white); text-transform:uppercase;
+  }
+  .portrait-tag span{display:block; color:var(--grey); font-size:10px; margin-top:3px;}
   .facts{border:1px solid var(--line); background:var(--panel);}
   .fact{display:flex; justify-content:space-between; padding:18px 22px; border-bottom:1px solid var(--line); font-size:14px;}
   .fact:last-child{border-bottom:none;}
@@ -267,6 +303,8 @@
 
 <!-- ================= HERO ================= -->
 <header class="hero" id="top">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
   <canvas id="hero-canvas"></canvas>
   <div class="wrap hero-inner">
     <div class="eyebrow">
@@ -307,12 +345,18 @@
           <b>Currently studying:</b> Pursuing a B.Tech in Mechanical Engineering (2nd year), building on his Diploma in Mechanical Engineering from Government Polytechnic Sakoli.
         </div>
       </div>
-      <div class="facts reveal reveal-d2">
+      <div class="reveal reveal-d2">
+        <div class="portrait-frame">
+          <img src="portrait.jpg" alt="Sujal Sarve">
+          <div class="portrait-tag">Sujal Sarve<span>Mechanical Engineering</span></div>
+        </div>
+        <div class="facts">
         <div class="fact"><span>Based in</span><span>Bhandara, Maharashtra, IN</span></div>
         <div class="fact"><span>Email</span><span>sarvesujal26@gmail.com</span></div>
         <div class="fact"><span>Phone</span><span>+91 78418&nbsp;60258</span></div>
         <div class="fact"><span>Languages</span><span>Marathi, Hindi, English</span></div>
         <div class="fact"><span>Tools</span><span>AutoCAD, MS Office</span></div>
+        </div>
       </div>
     </div>
   </div>
